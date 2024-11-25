@@ -4,27 +4,23 @@ using Microsoft.AspNetCore.Mvc;
 [Route("[controller]")]
 public class ClientesController : ControllerBase
 {
-    private static List<Cliente> clientes = new List<Cliente>();
+     private readonly AppDbContext _context;
+
+    public  ClientesController(AppDbContext context)
+    {
+        _context = context;
+    }
 
     [HttpGet]
     public ActionResult<IEnumerable<Cliente>> GetAll()
     {
-        return clientes;
+        return _context.Clientes.ToList();
     }
 
     [HttpGet("{id}")]
     public ActionResult<Cliente> GetById(int id)
     {
-        Cliente? clienteEncontrado = null;
-
-        foreach (var cliente in clientes)
-        {
-            if (cliente.Id == id)
-            {
-                clienteEncontrado = cliente;
-                break;
-            }
-        }
+        var clienteEncontrado = _context.Clientes.Find(id);
 
         if (clienteEncontrado == null)
             return NotFound();
@@ -35,24 +31,15 @@ public class ClientesController : ControllerBase
     [HttpPost]
     public ActionResult Post(Cliente cliente)
     {
-        cliente.Id = clientes.Count + 1;
-        clientes.Add(cliente);
-        return CreatedAtAction(nameof(GetAll), new { id = cliente.Id }, cliente);
+        _context.Clientes.Add(cliente);
+        _context.SaveChanges();
+        return Created();
     }
 
     [HttpPut("{id}")]
     public ActionResult Put(int id, Cliente clienteAtualizado)
     {
-        Cliente? clienteEncontrado = null;
-
-        foreach (var cliente in clientes)
-        {
-            if (cliente.Id == id)
-            {
-                clienteEncontrado = cliente;
-                break;
-            }
-        }
+       var clienteEncontrado = _context.Clientes.Find(id);
 
         if (clienteEncontrado == null)
             return NotFound();
@@ -67,21 +54,13 @@ public class ClientesController : ControllerBase
     [HttpDelete("{id}")]
     public ActionResult Delete(int id)
     {
-        Cliente? clienteParaRemover = null;
+        var clienteEncontrado = _context.Clientes.Find(id);
 
-        foreach (var cliente in clientes)
-        {
-            if (cliente.Id == id)
-            {
-                clienteParaRemover = cliente;
-                break;
-            }
-        }
-
-        if (clienteParaRemover == null)
+        if (clienteEncontrado == null)
             return NotFound();
 
-        clientes.Remove(clienteParaRemover);
+        _context.Clientes.Remove(clienteEncontrado);
+        _context.SaveChanges();
         return NoContent();
     }
 }

@@ -31,3 +31,4 @@ C:\Users\Acer\OneDrive\Desktop\laboratório de programação\apiclientes\Cliente
 C:\Users\Acer\OneDrive\Desktop\laboratório de programação\apiclientes\ClientesApi\obj\Debug\net8.0\ClientesApi.pdb
 C:\Users\Acer\OneDrive\Desktop\laboratório de programação\apiclientes\ClientesApi\obj\Debug\net8.0\ClientesApi.genruntimeconfig.cache
 C:\Users\Acer\OneDrive\Desktop\laboratório de programação\apiclientes\ClientesApi\obj\Debug\net8.0\ref\ClientesApi.dll
+C:\Users\Acer\OneDrive\Desktop\laboratório de programação\apiclientes\ClientesApi\obj\Debug\net8.0\ClientesApi.sourcelink.json
